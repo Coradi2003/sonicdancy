@@ -4,14 +4,14 @@ import { Play } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 const videos = [
-  "/videos/video1.mp4",
-  "/videos/video2.mp4",
-  "/videos/video3.mp4",
-  "/videos/video4.mp4",
-  "/videos/video5.mp4",
-  "/videos/video6.mp4",
-  "/videos/video7.mp4",
-  "/videos/video8.mp4",
+  "/videos/video1.mp4#t=0.001",
+  "/videos/video2.mp4#t=0.001",
+  "/videos/video3.mp4#t=0.001",
+  "/videos/video4.mp4#t=0.001",
+  "/videos/video5.mp4#t=0.001",
+  "/videos/video6.mp4#t=0.001",
+  "/videos/video7.mp4#t=0.001",
+  "/videos/video8.mp4#t=0.001",
 ];
 
 const GallerySection = () => {

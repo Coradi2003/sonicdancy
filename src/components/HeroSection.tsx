@@ -36,7 +36,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="font-display text-4xl sm:text-5xl md:text-7xl font-bold leading-tight max-w-4xl mx-auto mb-6"
+          className="font-display text-3xl sm:text-5xl md:text-7xl font-bold leading-tight max-w-4xl mx-auto mb-6"
         >
           Performance que transforma qualquer evento em um{" "}
           <span className="text-gradient">espetáculo</span>
@@ -46,7 +46,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto mb-10 font-light"
+          className="text-muted-foreground text-base sm:text-lg md:text-xl max-w-2xl mx-auto mb-10 font-light"
         >
           Performances profissionais para navios piratas, casas noturnas, animação de pistas, flashbacks, aniversários, resenhas e eventos temáticos.
         </motion.p>
@@ -59,7 +59,7 @@ const HeroSection = () => {
         >
           <a
             href="#contact"
-            className="glow-button px-8 py-4 rounded-lg bg-primary text-primary-foreground font-body font-semibold text-lg tracking-wide"
+            className="glow-button w-full sm:w-auto px-8 py-4 rounded-lg bg-primary text-primary-foreground font-body font-semibold text-lg tracking-wide"
           >
             Agende Agora
           </a>
@@ -67,7 +67,7 @@ const HeroSection = () => {
             href="https://wa.me/5547992626926"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-8 py-4 rounded-lg glass text-foreground font-body font-medium hover:bg-secondary/80 transition-all"
+            className="flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-4 rounded-lg glass text-foreground font-body font-medium hover:bg-secondary/80 transition-all"
           >
             <MessageCircle className="w-5 h-5 text-green-400" />
             WhatsApp

@@ -19,7 +19,7 @@ const AboutSection = () => {
             transition={{ duration: 0.8 }}
             className="flex-shrink-0"
           >
-            <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-2xl overflow-hidden glow-purple">
+            <div className="relative w-full max-w-[280px] aspect-square md:w-80 md:h-80 rounded-2xl overflow-hidden glow-purple mx-auto md:mx-0">
               <img
                 src={dancerReal}
                 alt="Performer profissional"
@@ -44,7 +44,7 @@ const AboutSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="font-display text-3xl md:text-5xl font-bold mb-8"
+              className="font-display text-2xl sm:text-3xl md:text-5xl font-bold mb-8"
             >
               Mais que dança — uma{" "}
               <span className="text-gradient">experiência</span> completa
@@ -53,7 +53,7 @@ const AboutSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.2 }}
-              className="text-muted-foreground text-lg md:text-xl leading-relaxed font-light"
+              className="text-muted-foreground text-base sm:text-lg md:text-xl leading-relaxed font-light"
             >
               Uma experiência de performance completa, projetada para cativar o público e elevar
               a atmosfera de qualquer evento. Cada movimento é pensado para contar uma história,

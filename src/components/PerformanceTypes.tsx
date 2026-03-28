@@ -32,7 +32,7 @@ const PerformanceTypes = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.1 }}
-          className="font-display text-3xl md:text-5xl font-bold text-center mb-16"
+          className="font-display text-2xl sm:text-3xl md:text-5xl font-bold text-center mb-16"
         >
           Tipos de <span className="text-gradient">Performance</span>
         </motion.h2>
@@ -44,7 +44,7 @@ const PerformanceTypes = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.15 * i, duration: 0.6 }}
-              className="glass rounded-xl p-6 text-center card-lift cursor-pointer group"
+              className="glass rounded-xl p-5 sm:p-6 text-center card-lift cursor-pointer group"
             >
               <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
                 <item.icon className="w-6 h-6 text-primary" />

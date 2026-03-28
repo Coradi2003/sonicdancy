@@ -24,7 +24,7 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
-        <a href="#" className="font-display text-xl font-bold text-gradient">
+        <a href="#" className="font-display text-lg sm:text-xl font-bold text-gradient">
           SONICDANCY
         </a>
 
@@ -55,7 +55,7 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       {open && (
-        <div className="md:hidden glass mt-2 mx-4 rounded-xl p-6 space-y-4">
+        <div className="md:hidden glass mt-2 mx-4 rounded-xl p-6 space-y-4 animate-in fade-in slide-in-from-top-4 duration-300">
           {links.map((l) => (
             <a
               key={l.href}
