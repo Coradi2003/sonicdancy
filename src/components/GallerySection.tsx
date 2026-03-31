@@ -45,13 +45,15 @@ const GallerySection = () => {
     }
   };
 
-  const allMedia = adminMedia.map((item) => ({
-    url: item.type === "youtube" 
-      ? item.url
-      : item.url,
-    type: item.type,
-    id: item.id,
-  }));
+  const allMedia = adminMedia
+    .filter((item) => item.url && item.url.trim() !== '') // Filtrar itens vazios
+    .map((item) => ({
+      url: item.type === "youtube" 
+        ? item.url
+        : item.url,
+      type: item.type,
+      id: item.id,
+    }));
 
   return (
     <section className="py-24 md:py-32 relative" ref={ref} id="gallery">
@@ -89,11 +91,25 @@ const GallerySection = () => {
               onClick={() => setSelectedMedia({ url: media.url, type: media.type })}
             >
               {media.type === "youtube" ? (
-                <div className="w-full h-full relative">
+                <div className="w-full h-full relative bg-black">
                   <img
                     src={`https://img.youtube.com/vi/${media.url}/maxresdefault.jpg`}
                     alt="YouTube thumbnail"
                     className="w-full h-full object-cover"
+                    onError={(e) => {
+                      // Tentar thumbnail de qualidade média se maxres falhar
+                      const target = e.currentTarget;
+                      if (target.src.includes('maxresdefault')) {
+                        target.src = `https://img.youtube.com/vi/${media.url}/hqdefault.jpg`;
+                      } else {
+                        // Se ainda falhar, mostrar placeholder
+                        target.style.display = 'none';
+                        const parent = target.parentElement;
+                        if (parent) {
+                          parent.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                        }
+                      }
+                    }}
                   />
                   <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors flex items-center justify-center">
                     <Play className="w-10 h-10 text-white/80 group-hover:text-white group-hover:scale-110 transition-all" />
