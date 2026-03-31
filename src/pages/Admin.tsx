@@ -186,7 +186,11 @@ const Admin = () => {
 
   const extractYouTubeId = (url: string): string | null => {
     const patterns = [
+      // URLs normais do YouTube
       /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
+      // YouTube Shorts
+      /youtube\.com\/shorts\/([^&\n?#]+)/,
+      // Apenas o ID
       /^([a-zA-Z0-9_-]{11})$/
     ];
     
@@ -349,14 +353,18 @@ const Admin = () => {
               
               <TabsContent value="youtube" className="space-y-4">
                 <Input
-                  placeholder="Cole a URL do YouTube ou ID do vídeo"
+                  placeholder="Cole a URL do YouTube, Shorts ou ID do vídeo"
                   value={newUrl}
                   onChange={(e) => setNewUrl(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && !isSubmitting && handleAddMedia()}
                   disabled={isSubmitting}
                 />
                 <p className="text-sm text-muted-foreground">
-                  Exemplos: https://youtube.com/watch?v=VIDEO_ID ou https://youtu.be/VIDEO_ID
+                  Exemplos: 
+                  <br />• https://youtube.com/watch?v=VIDEO_ID
+                  <br />• https://youtu.be/VIDEO_ID
+                  <br />• https://youtube.com/shorts/VIDEO_ID
+                  <br />• Ou apenas o ID do vídeo
                 </p>
               </TabsContent>
               
