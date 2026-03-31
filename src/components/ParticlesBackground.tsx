@@ -74,7 +74,8 @@ const ParticlesBackground = () => {
 
     const init = () => {
       resize();
-      const count = Math.min(Math.floor((canvas.width * canvas.height) / 12000), 120);
+      // Reduzir número de partículas para melhor performance
+      const count = Math.min(Math.floor((canvas.width * canvas.height) / 20000), 60);
       particles = Array.from({ length: count }, () => new Particle(canvas.width, canvas.height));
     };
 
@@ -85,14 +86,14 @@ const ParticlesBackground = () => {
         p.draw(ctx);
       });
 
-      // Draw connections
+      // Otimizar conexões - reduzir distância e quantidade
       for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
+        for (let j = i + 1; j < Math.min(i + 5, particles.length); j++) {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 120) {
-            const opacity = (1 - dist / 120) * 0.08;
+          if (dist < 100) {
+            const opacity = (1 - dist / 100) * 0.06;
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);

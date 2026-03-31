@@ -4,17 +4,6 @@ import { Play } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { supabase, MediaItem } from "@/lib/supabase";
 
-const defaultVideos = [
-  "/videos/video1.mp4#t=0.001",
-  "/videos/video2.mp4#t=0.001",
-  "/videos/video3.mp4#t=0.001",
-  "/videos/video4.mp4#t=0.001",
-  "/videos/video5.mp4#t=0.001",
-  "/videos/video6.mp4#t=0.001",
-  "/videos/video7.mp4#t=0.001",
-  "/videos/video8.mp4#t=0.001",
-];
-
 const GallerySection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
@@ -46,7 +35,8 @@ const GallerySection = () => {
       const { data, error } = await supabase
         .from("media_items")
         .select("*")
-        .order("created_at", { ascending: false });
+        .order("created_at", { ascending: false })
+        .limit(20); // Limitar a 20 itens para melhor performance
 
       if (error) throw error;
       setAdminMedia(data || []);
@@ -55,20 +45,13 @@ const GallerySection = () => {
     }
   };
 
-  const allMedia = [
-    ...adminMedia.map((item) => ({
-      url: item.type === "youtube" 
-        ? item.url
-        : item.url,
-      type: item.type,
-      id: item.id,
-    })),
-    ...defaultVideos.map((url, i) => ({
-      url,
-      type: "video",
-      id: `default-${i}`,
-    })),
-  ];
+  const allMedia = adminMedia.map((item) => ({
+    url: item.type === "youtube" 
+      ? item.url
+      : item.url,
+    type: item.type,
+    id: item.id,
+  }));
 
   return (
     <section className="py-24 md:py-32 relative" ref={ref} id="gallery">
