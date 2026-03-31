@@ -62,47 +62,46 @@ const Admin = () => {
 
   const checkAdminStatus = async (userId: string) => {
     try {
-      console.log("Verificando admin status para:", userId);
+      console.log("🔍 Verificando admin status para:", userId);
       
       const { data, error } = await supabase
         .from("profiles")
-        .select("is_admin")
+        .select("*")
         .eq("id", userId)
         .single();
 
-      console.log("Resultado da query:", { data, error });
+      console.log("📊 Resultado completo:", { data, error });
 
       if (error) {
-        console.error("Erro ao buscar perfil:", error);
-        toast.error("Erro ao verificar permissões. Perfil não encontrado!");
+        console.error("❌ Erro ao buscar perfil:", error);
+        toast.error("Erro: " + error.message);
         setIsSubmitting(false);
         setLoading(false);
-        await supabase.auth.signOut();
         return;
       }
       
-      const isUserAdmin = data?.is_admin ?? false;
+      console.log("✅ Perfil encontrado:", data);
+      console.log("🔑 is_admin:", data?.is_admin);
+      
+      const isUserAdmin = data?.is_admin === true;
+      console.log("🎯 isUserAdmin final:", isUserAdmin);
+      
       setIsAdmin(isUserAdmin);
+      setLoading(false);
+      setIsSubmitting(false);
       
       if (!isUserAdmin) {
-        toast.error("❌ Acesso negado! Você não é admin. Execute no SQL: UPDATE profiles SET is_admin = TRUE WHERE email = '" + email + "';", {
-          duration: 10000,
-        });
-        setIsSubmitting(false);
-        setLoading(false);
+        toast.error("❌ Você não é admin!");
         await supabase.auth.signOut();
       } else {
-        toast.success("✅ Login realizado com sucesso!");
-        setIsSubmitting(false);
-        setLoading(false);
+        toast.success("✅ Bem-vindo ao painel admin!");
       }
-    } catch (error) {
-      console.error("Error checking admin status:", error);
+    } catch (error: any) {
+      console.error("💥 Erro catch:", error);
       setIsAdmin(false);
       setIsSubmitting(false);
       setLoading(false);
-      toast.error("Erro ao verificar permissões");
-      await supabase.auth.signOut();
+      toast.error("Erro: " + error.message);
     }
   };
 
