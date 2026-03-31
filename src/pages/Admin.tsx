@@ -73,7 +73,8 @@ const Admin = () => {
       setIsAdmin(data?.is_admin ?? false);
       
       if (!data?.is_admin) {
-        toast.error("Acesso negado. Você não é um administrador.");
+        toast.error("Acesso negado! Você não é um administrador. Execute no SQL: UPDATE profiles SET is_admin = TRUE WHERE email = 'seu-email';");
+        await supabase.auth.signOut();
       }
     } catch (error) {
       console.error("Error checking admin status:", error);
