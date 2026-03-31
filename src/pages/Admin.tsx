@@ -68,7 +68,7 @@ const Admin = () => {
         .from("profiles")
         .select("*")
         .eq("id", userId)
-        .single();
+        .maybeSingle(); // Usar maybeSingle ao invés de single
 
       console.log("📊 Resultado completo:", { data, error });
 
@@ -77,6 +77,33 @@ const Admin = () => {
         toast.error("Erro: " + error.message);
         setIsSubmitting(false);
         setLoading(false);
+        return;
+      }
+
+      if (!data) {
+        console.log("⚠️ Perfil não encontrado, criando...");
+        // Criar perfil se não existir
+        const { data: userData } = await supabase.auth.getUser();
+        const { error: insertError } = await supabase
+          .from("profiles")
+          .insert({
+            id: userId,
+            email: userData.user?.email || email,
+            is_admin: false
+          });
+
+        if (insertError) {
+          console.error("Erro ao criar perfil:", insertError);
+          toast.error("Erro ao criar perfil. Contate o administrador.");
+          setIsSubmitting(false);
+          setLoading(false);
+          return;
+        }
+
+        toast.error("❌ Perfil criado mas você não é admin. Contate o administrador.");
+        setIsSubmitting(false);
+        setLoading(false);
+        await supabase.auth.signOut();
         return;
       }
       
@@ -94,7 +121,6 @@ const Admin = () => {
         toast.error("❌ Você não é admin!");
         await supabase.auth.signOut();
       } else if (showWelcome) {
-        // Mostrar mensagem apenas quando showWelcome for true (no login)
         toast.success("✅ Bem-vindo ao painel admin!");
       }
     } catch (error: any) {
