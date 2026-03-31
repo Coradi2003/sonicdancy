@@ -27,7 +27,7 @@ const Admin = () => {
     const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
       if (session?.user) {
-        checkAdminStatus(session.user.id);
+        checkAdminStatus(session.user.id, false); // false = não mostrar welcome
       } else {
         setIsAdmin(false);
         setLoading(false);
@@ -50,7 +50,7 @@ const Admin = () => {
       const { data: { user } } = await supabase.auth.getUser();
       setUser(user);
       if (user) {
-        await checkAdminStatus(user.id);
+        await checkAdminStatus(user.id, false); // false = não mostrar welcome
       } else {
         setLoading(false);
       }
@@ -60,7 +60,7 @@ const Admin = () => {
     }
   };
 
-  const checkAdminStatus = async (userId: string) => {
+  const checkAdminStatus = async (userId: string, showWelcome: boolean = false) => {
     try {
       console.log("🔍 Verificando admin status para:", userId);
       
@@ -93,7 +93,8 @@ const Admin = () => {
       if (!isUserAdmin) {
         toast.error("❌ Você não é admin!");
         await supabase.auth.signOut();
-      } else {
+      } else if (showWelcome) {
+        // Mostrar mensagem apenas quando showWelcome for true (no login)
         toast.success("✅ Bem-vindo ao painel admin!");
       }
     } catch (error: any) {
@@ -134,7 +135,7 @@ const Admin = () => {
 
       if (data.user) {
         console.log("Usuário logado:", data.user.email);
-        await checkAdminStatus(data.user.id);
+        await checkAdminStatus(data.user.id, true); // true = mostrar welcome apenas no login
       }
     } catch (error: any) {
       console.error("Login error:", error);
