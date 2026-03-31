@@ -62,25 +62,47 @@ const Admin = () => {
 
   const checkAdminStatus = async (userId: string) => {
     try {
+      console.log("Verificando admin status para:", userId);
+      
       const { data, error } = await supabase
         .from("profiles")
         .select("is_admin")
         .eq("id", userId)
         .single();
 
-      if (error) throw error;
-      
-      setIsAdmin(data?.is_admin ?? false);
-      
-      if (!data?.is_admin) {
-        toast.error("Acesso negado! Você não é um administrador. Execute no SQL: UPDATE profiles SET is_admin = TRUE WHERE email = 'seu-email';");
+      console.log("Resultado da query:", { data, error });
+
+      if (error) {
+        console.error("Erro ao buscar perfil:", error);
+        toast.error("Erro ao verificar permissões. Perfil não encontrado!");
+        setIsSubmitting(false);
+        setLoading(false);
         await supabase.auth.signOut();
+        return;
+      }
+      
+      const isUserAdmin = data?.is_admin ?? false;
+      setIsAdmin(isUserAdmin);
+      
+      if (!isUserAdmin) {
+        toast.error("❌ Acesso negado! Você não é admin. Execute no SQL: UPDATE profiles SET is_admin = TRUE WHERE email = '" + email + "';", {
+          duration: 10000,
+        });
+        setIsSubmitting(false);
+        setLoading(false);
+        await supabase.auth.signOut();
+      } else {
+        toast.success("✅ Login realizado com sucesso!");
+        setIsSubmitting(false);
+        setLoading(false);
       }
     } catch (error) {
       console.error("Error checking admin status:", error);
       setIsAdmin(false);
-    } finally {
+      setIsSubmitting(false);
       setLoading(false);
+      toast.error("Erro ao verificar permissões");
+      await supabase.auth.signOut();
     }
   };
 
@@ -112,13 +134,12 @@ const Admin = () => {
       if (error) throw error;
 
       if (data.user) {
+        console.log("Usuário logado:", data.user.email);
         await checkAdminStatus(data.user.id);
-        toast.success("Login realizado com sucesso!");
       }
     } catch (error: any) {
       console.error("Login error:", error);
       toast.error(error.message || "Erro ao fazer login");
-    } finally {
       setIsSubmitting(false);
     }
   };
