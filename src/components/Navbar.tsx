@@ -25,7 +25,7 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
         <a href="#" className="font-display text-lg sm:text-xl font-bold text-gradient">
-          SONICDANCY
+          SONIKDANCEYBC
         </a>
 
         {/* Desktop */}

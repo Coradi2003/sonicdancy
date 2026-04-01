@@ -27,7 +27,7 @@ const Index = () => {
       <footer className="py-8 border-t border-border/30">
         <div className="container mx-auto px-6 text-center">
           <p className="text-muted-foreground text-sm font-light">
-            © {new Date().getFullYear()} SONICDANCY. Todos os direitos reservados.
+            © {new Date().getFullYear()} SONIKDANCEYBC. Todos os direitos reservados.
           </p>
         </div>
       </footer>
