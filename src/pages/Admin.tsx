@@ -218,6 +218,11 @@ const Admin = () => {
       let processedUrl = newUrl.trim();
       let type: "youtube" | "image" = activeTab;
 
+      // SIMULAÇÃO DE ERRO PEDIDA PELO USUÁRIO (REVERTER DEPOIS)
+      if (type === "youtube") {
+        throw new Error("Limite do banco excedido");
+      }
+
       if (type === "youtube") {
         const videoId = extractYouTubeId(processedUrl);
         if (!videoId) {
